@@ -8,24 +8,35 @@ Created on Fri Apr 12 13:42:58 2019
 from Puzzle import Puzzle
 import numpy as np
 
-print("Esta es la vista del puzzle resuelto")
+print('Esta es la vista del puzzle resuelto')
 print()
 resultado = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,0]
 matrizResultado = Puzzle(resultado)
 matrizResultado.toString()
+explicacion = 'Usted debe generar ese mismo puzzle a partir de otro diferente cuyas posiciones estan colocadas aleatoriamente. ¿Desea resolver el puzzle? [s/n]: '
+letra = input(explicacion)
 print()
-
-print('Usted debe generar ese mismo puzzle a partir de otro diferente',end='')
-print('cuyas posiciones estan colocadas aleatoriamente',end='.')
-print('¿Desea resolver el puzzle? [s/n]:')
-letra = input()
 if letra == 's' or letra == 'S':
     aleatorios = np.random.choice(np.arange(16),16,replace=False)
     matriz = Puzzle(aleatorios)
     matriz.toString()
-    print()
-    print('Posicion libre:',matriz.mostrarHueco())
-    print('Numeros adyacentes al hueco:',matriz.mostrarAdyacentes())    
+    matriz.mostrarHueco()
+    matriz.mostrarAdyacentes()
+    escogerNumero = 'De esos numeros adyacentes, ¿cual desea escoger?: '
+    numero = int(input(escogerNumero))
+    while not matriz.esAdyacente(numero):
+        numero = int(input('El numero que has seleccionado no es adyacente, por favor introduzca un numero correcto: '))
+    while not matriz.esSolucion(matrizResultado):
+        matriz.recolocarPiezas(numero,matrizResultado)
+        matriz.toString()
+        print('Numero de movimientos realizados: ',matriz.getMovimientos())
+        matriz.mostrarHueco()
+        matriz.mostrarAdyacentes()
+        escogerNumero = 'De esos numeros adyacentes, ¿cual desea escoger?: '
+        numero = int(input(escogerNumero))
+        while not matriz.esAdyacente(numero):
+            numero = int(input('El numero que has seleccionado no es adyacente, por favor introduzca un numero correcto: '))
+    print('¡Genial has resuelto el puzzle en ',matriz.getMovimientos(),' movimientos!')
 else:
     print('¡Hasta la proxima!')
 
