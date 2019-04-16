@@ -128,7 +128,7 @@ def buscarAdyacente(matriz,numero,iHueco,jHueco):
             else:
                 adyacente = (iHueco,jHueco-1)
     return adyacente
-        
+    
 class Puzzle:
     
     def __init__(self,vector):
@@ -162,7 +162,6 @@ class Puzzle:
         print('Numeros adyacentes al hueco:',end=' ')
         for i in self.adyacentes:
             print(i,end=' ')
-        print()
         
     def esAdyacente(self,numero):
         for i in self.adyacentes:
@@ -170,19 +169,23 @@ class Puzzle:
                 return True
         return False
     
-    def esSolucion(self,matrizResultado):
-        for i in range(FILAS):
-            for j in range(COLUMNAS):
-                if self.matriz[i][j] != matrizResultado[i][j]:
+    def esSolucion(self):
+        k = 0
+        for i in range(self.filas):
+            for j in range(self.columnas):
+                if self.matriz[i][j] != lista[k] :
                     return False
+                else:
+                    k+=1
         return True
     
     def recolocarPiezas(self,numero,matrizResultado):
         adyacente = buscarAdyacente(self.matriz,numero,self.hueco[0],self.hueco[1])
-        self.hueco[0] = adyacente[0]
-        self.hueco[1] = adyacente[1]
+        self.matriz[self.hueco[0]][self.hueco[1]] = self.matriz[adyacente[0]][adyacente[1]]
+        self.matriz[adyacente[0]][adyacente[1]] = 0
         self.movimientos+=1
-        
+        self.hueco = buscarHueco(self.matriz)
+        self.adyacentes = dameAdyacentes(self.matriz,self.hueco[0],self.hueco[1])
                 
 
     

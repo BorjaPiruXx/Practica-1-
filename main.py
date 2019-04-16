@@ -22,20 +22,19 @@ if letra == 's' or letra == 'S':
     matriz.toString()
     matriz.mostrarHueco()
     matriz.mostrarAdyacentes()
-    escogerNumero = 'De esos numeros adyacentes, ¿cual desea escoger?: '
-    numero = int(input(escogerNumero))
-    while not matriz.esAdyacente(numero):
-        numero = int(input('El numero que has seleccionado no es adyacente, por favor introduzca un numero correcto: '))
-    while not matriz.esSolucion(matrizResultado):
-        matriz.recolocarPiezas(numero,matrizResultado)
-        matriz.toString()
-        print('Numero de movimientos realizados: ',matriz.getMovimientos())
-        matriz.mostrarHueco()
-        matriz.mostrarAdyacentes()
+    while not matriz.esSolucion():
         escogerNumero = 'De esos numeros adyacentes, ¿cual desea escoger?: '
         numero = int(input(escogerNumero))
         while not matriz.esAdyacente(numero):
             numero = int(input('El numero que has seleccionado no es adyacente, por favor introduzca un numero correcto: '))
+        print()
+        matriz.recolocarPiezas(numero,matrizResultado)
+        matriz.toString()
+        print('Numero de movimientos realizados:',matriz.getMovimientos())
+        matriz.mostrarHueco()
+        matriz.mostrarAdyacentes()
+        if matriz.esSolucion():
+            break
     print('¡Genial has resuelto el puzzle en ',matriz.getMovimientos(),' movimientos!')
 else:
     print('¡Hasta la proxima!')
